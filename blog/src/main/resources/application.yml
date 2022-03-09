@@ -1,0 +1,14 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /g-blog
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root123456
+    url: jdbc:mysql://localhost:3306/g_blog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+
