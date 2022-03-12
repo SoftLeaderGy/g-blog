@@ -29,4 +29,6 @@ public interface UserService {
      */
     boolean deleteById(Long id);
 
+    Result<User> getUserByUsername(String username);
+
 }

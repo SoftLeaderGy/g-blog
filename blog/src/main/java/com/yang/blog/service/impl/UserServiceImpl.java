@@ -1,5 +1,6 @@
 package com.yang.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yang.blog.common.lang.Result;
 import com.yang.blog.entity.User;
 import com.yang.blog.dao.UserDao;
@@ -41,4 +42,18 @@ public class UserServiceImpl implements UserService {
     public boolean deleteById(Long id) {
         return this.mUserDao.deleteById(id) > 0;
     }
+
+    /**
+     * 根据用户名获取用户信息
+     * @param username
+     * @return
+     */
+    @Override
+    public Result<User> getUserByUsername(String username) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("username",username);
+        User user = mUserDao.selectOne(queryWrapper);
+        return Result.succ(user);
+    }
+
 }

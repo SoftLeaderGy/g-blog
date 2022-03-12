@@ -3,6 +3,8 @@ package com.yang.blog.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -17,11 +19,13 @@ public class User implements Serializable {
     private static final long serialVersionUID = -53701853693409224L;
     
     private Long id;
-    
+
+    @NotBlank(message = "用户名不可以为空！")
     private String username;
     
     private String avatar;
-    
+
+    @Email(message = "email格式不正确！")
     private String email;
     
     private String password;
