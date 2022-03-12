@@ -9,13 +9,17 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @Description: 创建jwtFilter bean
@@ -39,7 +43,7 @@ public class JwtFilter extends AuthenticatingFilter {
 
         // 从hander里边获取出jwt，并将一些信息封装成token
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader("accessToken");
         if(StringUtils.isEmpty(jwt)){
             return null;
         }
@@ -60,7 +64,7 @@ public class JwtFilter extends AuthenticatingFilter {
         // 验证jwt
         // 从hander里边获取出jwt
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader("accessToken");
         // 如果没有token的话，可以访问一些路径
         // 类似于 "游客" 一样的权限
         if(StringUtils.isEmpty(jwt)){
@@ -74,7 +78,7 @@ public class JwtFilter extends AuthenticatingFilter {
             }
             // 执行登录
 
-            return executeLogin(request,servletResponse);
+            return executeLogin(servletRequest,servletResponse);
         }
     }
 
@@ -93,14 +97,41 @@ public class JwtFilter extends AuthenticatingFilter {
         // 获取抛出异常的原因，也就是登录失败的原因
         Throwable throwable = e.getCause() == null ? e : e.getCause();
 
-        Result res = Result.fail(throwable.getMessage());
+        Result r = Result.fail(throwable.getMessage());
 
-        String s = JSONObject.toJSONString(res);
+        String s = JSONObject.toJSONString(r);
 
-        HttpServerResponse request1 = (HttpServerResponse) request;
+        HttpServletResponse response1 = (HttpServletResponse) response;
 
-        request1.getWriter().print(request1);
+        try {
+            response1.getWriter().print(s);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        return false;
+    }
 
-        return super.onLoginFailure(token, e, request, response);
+    /**
+     * 过滤器也需要解决跨域问题
+     *
+     * @param request
+     * @param response
+     * @param mappedValue
+     * @return
+     * @throws Exception
+     */
+    @Override
+    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+        HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
+        HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
+        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+        // 跨域时会首先发送一个OPTIONS请求，这里我们给OPTIONS请求直接返回正常状态
+        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
+            httpServletResponse.setStatus(org.springframework.http.HttpStatus.OK.value());
+            return false;
+        }
+        return super.preHandle(request, response);
     }
 }

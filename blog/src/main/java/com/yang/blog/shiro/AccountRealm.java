@@ -76,4 +76,9 @@ public class AccountRealm extends AuthorizingRealm {
         log.info("开始认证-----》");
         return null;
     }
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JwtToken;
+    }
 }

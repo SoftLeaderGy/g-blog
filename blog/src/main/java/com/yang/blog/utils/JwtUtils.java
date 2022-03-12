@@ -16,7 +16,7 @@ import java.util.Date;
 @Slf4j
 @Data
 @Component
-@ConfigurationProperties(prefix = "Gblog.jwt")
+@ConfigurationProperties(prefix = "gblog.jwt")
 public class JwtUtils {
 
     private String secret;
