@@ -1,19 +1,24 @@
 server:
   port: 8090
-  servlet:
-    context-path: /g-blog
+#  servlet:
+#    context-path: /g-blog
 
 spring:
+#  redis:
+#    sentinel:
+#      master: mymaster
+#      nodes: 39.105.228.254:26379
+#    password: root123456
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root123456
     url: jdbc:mysql://localhost:3306/g_blog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
 
-#  redis:
-#    host: localhost
-#    database: 0
-#    port: 6379
+  redis:
+    host: localhost
+    database: 0
+    port: 6379
   main:
     allow-bean-definition-overriding: true
 mybatis-plus:
@@ -26,4 +31,4 @@ gblog:
     # token有效时长 7天 单位秒
     expire: 604800
 #    hander 名
-    header: accessToken
+    header: Authorization

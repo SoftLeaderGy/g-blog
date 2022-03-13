@@ -52,20 +52,20 @@ public class ShiroConfig {
         return sessionManager;
     }
 
-    @Bean
-    public SessionsSecurityManager securityManager(AccountRealm accountRealm, SessionManager sessionManager, RedisCacheManager redisCacheManager) {
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager(accountRealm);
-
-        //inject sessionManager
-        securityManager.setSessionManager(sessionManager);
-
-        // inject redisCacheManager
-        securityManager.setCacheManager(redisCacheManager);
-
-        // other stuff...
-
-        return securityManager;
-    }
+//    @Bean
+//    public SessionsSecurityManager securityManager(AccountRealm accountRealm, SessionManager sessionManager, RedisCacheManager redisCacheManager) {
+//        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager(accountRealm);
+//
+//        //inject sessionManager
+//        securityManager.setSessionManager(sessionManager);
+//
+//        // inject redisCacheManager
+//        securityManager.setCacheManager(redisCacheManager);
+//
+//        // other stuff...
+//
+//        return securityManager;
+//    }
 
     /**
      * 过滤器链
@@ -86,17 +86,19 @@ public class ShiroConfig {
     }
 
     @Bean("shiroFilterFactoryBean")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager ,ShiroFilterChainDefinition shiroFilterChainDefinition){
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager,
+                                                         ShiroFilterChainDefinition shiroFilterChainDefinition) {
+        ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
+        shiroFilter.setSecurityManager(securityManager);
 
-        HashMap<String, Filter> filterHashMap = new HashMap<String, Filter>();
-        filterHashMap.put("jwt",jwtFilter);
-        shiroFilterFactoryBean.setFilters(filterHashMap);
-        Map<String, String> filterChainDefinitionMap = shiroFilterChainDefinition.getFilterChainMap();
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        Map<String, Filter> filters = new HashMap<>();
+        filters.put("jwt", jwtFilter);
+        shiroFilter.setFilters(filters);
 
-        return shiroFilterFactoryBean;
+        Map<String, String> filterMap = shiroFilterChainDefinition.getFilterChainMap();
+
+        shiroFilter.setFilterChainDefinitionMap(filterMap);
+        return shiroFilter;
     }
 //    @Bean("getDefaultWebSecurityManager")
 //    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("getAccountRealm") AccountRealm accountRealm){
@@ -106,6 +108,20 @@ public class ShiroConfig {
 //    }
 //
 
+    @Bean
+    public DefaultWebSecurityManager securityManager(AccountRealm accountRealm,
+                                                     SessionManager sessionManager,
+                                                     RedisCacheManager redisCacheManager) {
+
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager(accountRealm);
+
+        //inject sessionManager
+        securityManager.setSessionManager(sessionManager);
+
+        // inject redisCacheManager
+        securityManager.setCacheManager(redisCacheManager);
+        return securityManager;
+    }
 
 
     @Bean

@@ -1,6 +1,7 @@
 package com.yang.blog.shiro;
 
 import cn.hutool.http.server.HttpServerResponse;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.yang.blog.common.lang.Result;
 import com.yang.blog.utils.JwtUtils;
@@ -94,19 +95,32 @@ public class JwtFilter extends AuthenticatingFilter {
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
 
-        // 获取抛出异常的原因，也就是登录失败的原因
+//        // 获取抛出异常的原因，也就是登录失败的原因
+//        Throwable throwable = e.getCause() == null ? e : e.getCause();
+//
+//        Result r = Result.fail(throwable.getMessage());
+//
+//        String s = JSONObject.toJSONString(r);
+//
+//        HttpServletResponse response1 = (HttpServletResponse) response;
+//
+//        try {
+//            response1.getWriter().print(s);
+//        } catch (IOException ioException) {
+//            ioException.printStackTrace();
+//        }
+//        return false;
+
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+
         Throwable throwable = e.getCause() == null ? e : e.getCause();
-
-        Result r = Result.fail(throwable.getMessage());
-
-        String s = JSONObject.toJSONString(r);
-
-        HttpServletResponse response1 = (HttpServletResponse) response;
+        Result result = Result.fail(throwable.getMessage());
+        String json = JSONUtil.toJsonStr(result);
 
         try {
-            response1.getWriter().print(s);
+            httpServletResponse.getWriter().print(json);
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+
         }
         return false;
     }
