@@ -50,6 +50,7 @@ public class AccountRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
+        log.info("开始认证-----》");
         JwtToken jwtToken = (JwtToken) token;
 
         // 解析 token 返回的claim claim就是存放在token中的用户信息 参数为token
@@ -73,8 +74,8 @@ public class AccountRealm extends AuthorizingRealm {
         // 将用户的部分信息复制给accountProfile
         BeanUtils.copyProperties(userResult.getData(),accountProfile);
 
-        log.info("开始认证-----》");
-        return null;
+        return new SimpleAuthenticationInfo(accountProfile, jwtToken.getCredentials(), getName());
+//        return null;
     }
 
     @Override
