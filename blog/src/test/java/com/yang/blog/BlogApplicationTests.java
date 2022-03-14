@@ -3,7 +3,8 @@ package com.yang.blog;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import java.math.BigDecimal;
+
 class BlogApplicationTests {
 
     @Test
