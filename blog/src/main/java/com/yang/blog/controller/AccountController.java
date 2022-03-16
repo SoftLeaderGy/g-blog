@@ -1,5 +1,6 @@
 package com.yang.blog.controller;
 
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.server.HttpServerResponse;
 import com.yang.blog.common.dto.LoginDTO;
 import com.yang.blog.common.exception.GblogException;
@@ -44,7 +45,7 @@ public class AccountController {
             throw new GblogException("用户不存在！");
         }
 
-        if(!userResult.getData().getPassword().equals(loginDTO.getPassword())){
+        if(!userResult.getData().getPassword().equals(SecureUtil.md5(loginDTO.getPassword()))){
             return Result.fail("密码不正确");
         }
 
