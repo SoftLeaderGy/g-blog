@@ -2,8 +2,8 @@
   <div>
     <el-container>
       <el-header>
-        <img src="https://www.markerhub.com/dist/images/logo/markerhub-logo.png"
-             style="height: 60%; margin-top: 10px;">
+        <img src="http://localhost:8090/test.png"
+             style="height: 180%; margin-top: -25px;">
       </el-header>
       <el-main>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
