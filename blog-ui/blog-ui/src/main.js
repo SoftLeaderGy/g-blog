@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import './axios.js' // 请求拦截
 
 // 引入 element
 import Element from 'element-ui'

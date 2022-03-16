@@ -67,17 +67,9 @@ export default {
 
             if(res.data.code == 200){
               _this.$router.push("/blogs")
-            }else {
-              _this.$message.error(res.data.msg)
             }
             // console.log(jwt)
             // console.log(userInfo)
-          })
-          .catch(err=>{
-            debugger
-            _this.$message.error(err)
-            console.log(err)
-            return;
           })
         } else {
           console.log('error submit!!');
