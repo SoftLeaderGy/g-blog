@@ -9,7 +9,7 @@
     <div class="maction">
       <span><el-link href="/blogs" target="_blank">主页</el-link></span>
       <el-divider direction="vertical"></el-divider>
-      <span><el-link type="success">发表文章</el-link></span>
+      <span><el-link type="success" href="/blog/add">发表文章</el-link></span>
       <el-divider direction="vertical"></el-divider>
       <span v-if="hasInfo"><el-link  type="danger" @click="logout">退出</el-link></span>
       <span v-else><el-link  href="/login" type="primary">登陆</el-link></span>
@@ -46,7 +46,9 @@ name: "Hander",
   },
   created() {
 
-    let userInfo = JSON.parse(this.$store.getters.getUser)
+    // let userInfo = JSON.parse(this.$store.getters.getUser)
+    let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+    debugger
     if(!userInfo){
       return
     }
@@ -62,6 +64,7 @@ name: "Hander",
   margin: auto;
   max-width: 960px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .maction {
