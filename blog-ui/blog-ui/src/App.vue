@@ -30,4 +30,8 @@
 /*nav a.router-link-exact-active {*/
 /*  color: #42b983;*/
 /*}*/
+#app {
+  max-width: 960px;
+  margin: 0 auto;
+}
 </style>
