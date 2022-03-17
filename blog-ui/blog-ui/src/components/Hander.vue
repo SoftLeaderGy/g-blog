@@ -1,0 +1,71 @@
+<template>
+  <div class="m-content">
+    <h3>欢迎来到SoftLeaderGy的博客</h3>
+    <div class="block">
+      <el-avatar :size="50" :src="user.avatar">
+      </el-avatar>
+      <div>{{user.username}}</div>
+    </div>
+    <div class="maction">
+      <span><el-link href="/blogs" target="_blank">主页</el-link></span>
+      <el-divider direction="vertical"></el-divider>
+      <span><el-link type="success">发表文章</el-link></span>
+      <el-divider direction="vertical"></el-divider>
+      <span v-if="hasInfo"><el-link  type="danger" @click="logout">退出</el-link></span>
+      <span v-else><el-link  href="/login" type="primary">登陆</el-link></span>
+    </div>
+  </div>
+</template>
+
+<script>
+import store from '../store'
+export default {
+name: "Hander",
+  data(){
+    return{
+      user: {
+        username: '请先登陆',
+        avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+      },
+      hasInfo: false
+    }
+  },
+  methods: {
+    logout(){
+      const _this = this
+      // alert(localStorage.getItem("token"))
+      _this.$axios.post("/logout",{},{headers: {
+          "accessToken": localStorage.getItem("token")
+        }})
+      .then(res => {
+        // console.log(res)
+        _this.$store.commit("REMOVE_INFO")
+        _this.$router.push("/login")
+      })
+    }
+  },
+  created() {
+
+    let userInfo = JSON.parse(this.$store.getters.getUser)
+    if(!userInfo){
+      return
+    }
+    this.user.username = userInfo.username
+    this.user.avatar = userInfo.avatar
+    this.hasInfo = true
+  }
+}
+</script>
+
+<style scoped>
+.m-content {
+  margin: auto;
+  max-width: 960px;
+  text-align: center;
+}
+
+.maction {
+  margin-top: 20px;
+
+}
+</style>
