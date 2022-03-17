@@ -33,13 +33,16 @@ error =>{
     debugger
     console.log(error)
     // 如果是401 证明是没有权限，需要跳转到登录页面，并清空浏览器的缓存的用户信息，及token
-    if(error.response.data.code === 401){
-        Element.Message.error(error.response.msg)
-        store.commit("REMOVE_INFO") // 删除浏览器的本地信息
-        router.push("/login") // 返回登陆页面
+    if(error.response.data.code != undefined){
+        if(error.response.data.code === 401){
+            Element.Message.error(error.response.msg)
+            store.commit("REMOVE_INFO") // 删除浏览器的本地信息
+            router.push("/login") // 返回登陆页面
+        }
     }
 
-    Element.Message.error(error.response.data.msg)
+
+    Element.Message.error(error.response.data.msg == null ? error.response.data.message : error.response.data.msg)
     return Promise.reject(error) // 结束请求后续逻辑
     }
 )
