@@ -20,6 +20,7 @@ public interface BlogService extends IService<Blog> {
      * @return 实例对象
      */
     Blog queryById(Long id);
+    Blog queryById(String id);
 
     /**
      * 分页查询

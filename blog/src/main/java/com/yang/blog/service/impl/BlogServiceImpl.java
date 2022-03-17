@@ -25,6 +25,10 @@ public class BlogServiceImpl extends ServiceImpl<BlogDao, Blog> implements BlogS
     public Blog queryById(Long id) {
         return blogDao.selectById(id);
     }
+    @Override
+    public Blog queryById(String id) {
+        return blogDao.selectById(id);
+    }
 
     @Override
     public Result queryByPage(Long currPagae, Long pageSize) {

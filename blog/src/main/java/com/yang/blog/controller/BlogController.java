@@ -41,30 +41,40 @@ public class BlogController {
     }
 
     @GetMapping("/blogDetail/{id}")
-    public Result blogDetail(@PathVariable(name = "id")  Integer id){
+    public Result blogDetail(@PathVariable(name = "id")  String id){
 
-        Blog blog = blogService.queryById(Long.valueOf(id));
+        Blog blog = blogService.queryById(id);
         if(blog == null){
             return Result.fail("博客已被删除!");
         }
         return Result.succ(blog);
     }
 
+//    @GetMapping("/blogDetail/{id}")
+//    public Result blogDetail(@PathVariable(name = "id")  Long id){
+//
+//        Blog blog = blogService.queryById(id);
+//        if(blog == null){
+//            return Result.fail("博客已被删除!");
+//        }
+//        return Result.succ(blog);
+//    }
+
     @RequiresAuthentication
     @PostMapping("/blog/edit")
     public Result edit(@Validated @RequestBody Blog blog){
 
         Blog temp = null;
-        if(blog.getId() != null){
+        if(blog.getId() != null && !("".equals(blog.getId()))){
           // 编辑
-            temp = blogService.queryById(blog.getId());
+            temp = blogService.queryById(blog.getId()+ "");
             // 只能编辑自己的文章
             // 断言的形式判断
             Assert.isTrue(temp.getUserId().equals(ShiroUtil.getProfile().getId()),"没有权限编辑文章");
         } else {
           // 新增
             temp = new Blog();
-            temp.setId(ShiroUtil.getProfile().getId());
+            temp.setUserId(ShiroUtil.getProfile().getId());
             temp.setCreated(LocalDateTime.now());
             temp.setStatus(0);
         }
