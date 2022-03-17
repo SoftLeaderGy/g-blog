@@ -50,7 +50,7 @@ export default {
         // 原因：在调用this.$axios 后 在里边的this就指的是返回的结果，而不是vue本身的this
         const _this = this
         if (valid) {
-          this.$axios.post("http://localhost:8090/login",this.ruleForm)
+          this.$axios.post("/login",this.ruleForm)
           .then(res =>{
             // 获取accesstoken
             const jwt = res.headers['accesstoken']
