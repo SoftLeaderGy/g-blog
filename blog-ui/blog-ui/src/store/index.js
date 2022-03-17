@@ -12,6 +12,9 @@ export default new Vuex.Store({
     // 类似于java中的 get()
     getUser: state => {
       return state.userInfo
+    },
+    getToken: state => {
+      return state.token
     }
   },
   mutations: {
