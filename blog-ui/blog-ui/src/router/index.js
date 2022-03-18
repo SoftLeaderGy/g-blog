@@ -4,6 +4,7 @@ import Blogs from "@/views/Blogs";
 import Login from "@/views/Login";
 import BlogEdit from "@/views/BlogEdit";
 import BlogDetail from "@/views/BlogDetail";
+import Register from "@/views/Register";
 
 Vue.use(VueRouter)
 
@@ -27,7 +28,11 @@ const routes = [
   {
     path: '/blog/add',
     name: 'BlogAdd',
-    component: BlogEdit
+    component: BlogEdit,
+    // 表示前端路由拦截，也就是说，访问该路由需要权限
+    meta: {
+      requireAuth: true
+    }
   },
   {
     path: '/blog/:blogId/',
@@ -35,9 +40,18 @@ const routes = [
     component: BlogDetail
   },
   {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
+  {
     path: '/blog/:blogId/edit',
     name: 'BlogEdit',
-    component: BlogEdit
+    component: BlogEdit,
+    // 表示前端路由拦截，也就是说，访问该路由需要权限
+    meta: {
+      requireAuth: true
+    }
   },
 
   // {
