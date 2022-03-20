@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Data
 public class AccountProfile implements Serializable {
-    private Long id;
+    private String id;
 
     private String username;
 

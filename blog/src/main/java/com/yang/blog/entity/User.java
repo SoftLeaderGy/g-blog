@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = -53701853693409224L;
     
-    private Long id;
+    private String id;
 
     @NotBlank(message = "用户名不可以为空！")
     private String username;
@@ -37,11 +37,11 @@ public class User implements Serializable {
     private Date lastLogin;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

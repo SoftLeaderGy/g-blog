@@ -31,4 +31,5 @@ public interface UserService {
 
     Result<User> getUserByUsername(String username);
 
+    Result<User> getUserByEmail(String username);
 }

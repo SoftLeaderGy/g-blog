@@ -12,10 +12,13 @@ import java.io.Serializable;
  */
 @Data
 public class LoginDTO implements Serializable {
-
-    @NotBlank(message = "用户名不可为空！")
+//
+//    @NotBlank(message = "用户名不可为空！")
     private String username;
 
     @NotBlank(message = "密码不可为空！")
     private String password;
+
+    @NotBlank(message = "密码不可为空！")
+    private String email;
 }

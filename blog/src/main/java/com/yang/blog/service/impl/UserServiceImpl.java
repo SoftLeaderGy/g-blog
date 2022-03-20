@@ -56,4 +56,12 @@ public class UserServiceImpl implements UserService {
         return Result.succ(user);
     }
 
+    @Override
+    public Result<User> getUserByEmail(String email) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("email",email);
+        User user = mUserDao.selectOne(queryWrapper);
+        return Result.succ(user);
+    }
+
 }

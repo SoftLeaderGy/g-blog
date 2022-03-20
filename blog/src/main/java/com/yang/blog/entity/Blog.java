@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Blog implements Serializable {
     @TableId(type = IdType.UUID)
     private String id;
-    private Long userId;
+    private String userId;
 
     @NotBlank(message = "标题不能为空！")
     private String title;
