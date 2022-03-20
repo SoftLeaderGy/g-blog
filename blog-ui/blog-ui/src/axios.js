@@ -4,7 +4,8 @@ import Element from 'element-ui'
 import router from './router'
 import store from './store'
 
-axios.defaults.baseURL = "http://localhost:8090/"
+// axios.defaults.baseURL = "http://localhost:8090/"
+axios.defaults.baseURL = "http://yang.gunveda.top:8090/"
 
 // axios请求的前置拦截
 axios.interceptors.request.use(config => {
