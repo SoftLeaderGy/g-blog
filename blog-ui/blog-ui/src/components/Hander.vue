@@ -7,7 +7,7 @@
       <div>{{user.username}}</div>
     </div>
     <div class="maction">
-      <span><el-link href="/blogs" target="_blank">主页</el-link></span>
+      <span><el-link href="/blogs">主页</el-link></span>
       <el-divider direction="vertical"></el-divider>
       <span><el-link type="success" href="/blog/add">发表文章</el-link></span>
       <el-divider direction="vertical"></el-divider>
