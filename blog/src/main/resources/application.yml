@@ -19,8 +19,14 @@ spring:
     host: localhost
     database: 0
     port: 6379
+#    password: root123456
   main:
     allow-bean-definition-overriding: true
+    allow-circular-references: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
 
@@ -32,3 +38,11 @@ gblog:
     expire: 604800
 #    hander 名
     header: Authorization
+user:
+  avatar: https://image-1300566513.cos.ap-guangzhou.myqcloud.com/upload/images/5a9f48118166308daba8b6da7e466aab.jpg
+logging:
+  level:
+    com:
+      yang:
+        blog:
+          dao: debug
