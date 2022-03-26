@@ -32,6 +32,12 @@ public class UserServiceImpl implements UserService {
         return Result.succ(user);
     }
 
+    @Override
+    public Result<User> queryById(String id) {
+        User user = mUserDao.selectById(id);
+        return Result.succ(user);
+    }
+
     /**
      * 通过主键删除数据
      *

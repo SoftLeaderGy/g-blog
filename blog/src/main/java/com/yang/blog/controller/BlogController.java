@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yang.blog.common.lang.Result;
 import com.yang.blog.entity.Blog;
+import com.yang.blog.entity.BlogDTO;
+import com.yang.blog.entity.User;
 import com.yang.blog.service.BlogService;
+import com.yang.blog.service.UserService;
 import com.yang.blog.utils.ShiroUtil;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +29,8 @@ public class BlogController {
 
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private UserService userService;
     /**
      * 分页查询博客列表
      * @param currentpage
@@ -47,7 +52,11 @@ public class BlogController {
         if(blog == null){
             return Result.fail("博客已被删除!");
         }
-        return Result.succ(blog);
+        Result<User> userResult = userService.queryById(blog.getUserId());
+        BlogDTO blogDTO = new BlogDTO();
+        BeanUtils.copyProperties(blog,blogDTO);
+        blogDTO.setAuthor(userResult.getData().getUsername());
+        return Result.succ(blogDTO);
     }
 
 //    @GetMapping("/blogDetail/{id}")

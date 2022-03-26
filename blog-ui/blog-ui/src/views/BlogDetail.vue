@@ -10,7 +10,7 @@
         </el-link>
 
 
-      <el-divider content-position="left">{{this.userName}}</el-divider>
+      <el-divider content-position="left">{{this.blog.author}}</el-divider>
 <!--      使用markdown-body 央视渲染 md文件格式-->
 <!--      使用之前需要先导入import 'github-markdown-css/github-markdown.css'-->
       <div class="markdown-body" v-html="blog.content"></div>
@@ -31,7 +31,8 @@ export default {
         title: '',
         id: '',
         description: '',
-        content: ''
+        content: '',
+        author: ''
       },
       userName: '',
       hasAuth: false
@@ -55,6 +56,7 @@ export default {
             let content = md.render(res.data.data.content)
             _this.blog.content = content
             _this.blog.id = res.data.data.id+ ''
+            _this.blog.author = res.data.data.author
             debugger
 
              // 验证如果博客的userId和登陆的账号的id不同的话，则不显示编辑按钮

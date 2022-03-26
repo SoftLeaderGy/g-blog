@@ -19,6 +19,7 @@ public interface UserService {
      * @return 实例对象
      */
     Result<User> queryById(Long id);
+    Result<User> queryById(String id);
 
 
     /**
