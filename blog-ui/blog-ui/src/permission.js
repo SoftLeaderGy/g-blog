@@ -6,13 +6,13 @@ router.beforeEach((to, from, next) => {
         console.log("------------" + token)
         debugger
         if (token) { // 判断当前的token是否存在 ； 登录存入的token
-            if (to.path === '/login') {
+            if (to.name === 'Login') {
             } else {
                 next()
             }
         } else {
             next({
-                path: '/login'
+                name: 'Login'
             })
         }
     } else {

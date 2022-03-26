@@ -30,7 +30,7 @@
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
           <el-form-item>
-            <el-link type="info" :underline="false" href="/register">没有登陆的账号？</el-link>
+            <el-link type="info" :underline="false" href="#/register">没有登陆的账号？</el-link>
           </el-form-item>
 
         </el-form>
@@ -45,8 +45,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        email: '826044698@qq.com',
-        password: '111111',
+        email: '',
+        password: '',
       },
       rules: {
         username: [
