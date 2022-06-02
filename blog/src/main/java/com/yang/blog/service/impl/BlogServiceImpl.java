@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yang.blog.common.lang.Result;
 import com.yang.blog.dao.BlogDao;
 import com.yang.blog.entity.Blog;
+import com.yang.blog.entity.User;
 import com.yang.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -56,4 +59,10 @@ public class BlogServiceImpl extends ServiceImpl<BlogDao, Blog> implements BlogS
     public boolean deleteById(Long id) {
         return false;
     }
+
+    @Override
+    public List<Blog> orderUserList(Page<QueryWrapper> page, User user) {
+        return null;
+    }
+
 }

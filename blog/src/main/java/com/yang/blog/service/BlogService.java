@@ -1,10 +1,15 @@
 package com.yang.blog.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yang.blog.common.lang.Result;
 import com.yang.blog.entity.Blog;
+import com.yang.blog.entity.User;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -54,4 +59,7 @@ public interface BlogService extends IService<Blog> {
      * @return 是否成功
      */
     boolean deleteById(Long id);
+
+    @Select("SELECT * from fixmedins_b f left JOIN fixmedins_serv_mgt_d fs on f.FIXMEDINS_CODE = fs.FIXMEDINS_CODE WHERE t1.user_id= #{user.id}")
+    List<Blog> orderUserList(Page<QueryWrapper> page, User user);
 }
